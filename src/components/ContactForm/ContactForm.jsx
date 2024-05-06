@@ -1,7 +1,23 @@
 import { Formik } from 'formik';
 import { Form, Field, Button, SectionInput } from './ContactForm.styled';
+import { useDispatch, useSelector } from 'react-redux';
+import { addPhone } from '../../redux/contactSlice';
 
-export const ContactForm = ({ onAddContact }) => {
+export const ContactForm = () => {
+  const dispatch = useDispatch();
+  const contacts = useSelector(state => state.contacts.contacts);
+  const addContact = value => {
+    if (
+      contacts.some(
+        contact => contact.name.toLowerCase() === value.name.toLowerCase()
+      )
+    ) {
+      alert(`${value.name} is already in contacts`);
+      return;
+    }
+    dispatch(addPhone(value));
+  };
+
   return (
     <SectionInput>
       <Formik
@@ -11,7 +27,7 @@ export const ContactForm = ({ onAddContact }) => {
         }}
         onSubmit={(values, action) => {
           action.resetForm();
-          onAddContact(values);
+          addContact(values);
         }}
       >
         <Form>

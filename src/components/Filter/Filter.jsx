@@ -1,15 +1,25 @@
+import { useDispatch, useSelector } from 'react-redux';
+import { filterPhone } from '../../redux/filterSlice';
+
 const { Label, Input } = require('./Filter.styled');
 
-const Filter = ({ filter, onFilter }) => {
+const Filter = () => {
+  const dispatch = useDispatch();
+  const filter = useSelector(state => state.filter.filter);
+
+  const updateFilter = value => {
+    dispatch(filterPhone(value));
+  };
+
   return (
     <Label>
       Find contacts by name
       <Input
         type="text"
         name="filter"
-        placegolder="Search"
+        placeholder="Search"
         value={filter.value}
-        onChange={e => onFilter(e.target.value)}
+        onChange={e => updateFilter(e.target.value)}
       />
     </Label>
   );
