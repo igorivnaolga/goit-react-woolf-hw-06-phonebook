@@ -5,7 +5,7 @@ import { addPhone } from '../../redux/contactSlice';
 
 export const ContactForm = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(state => state.contacts.contacts);
+  const contacts = useSelector(state => state.contacts);
   const addContact = value => {
     if (
       contacts.some(
@@ -26,8 +26,8 @@ export const ContactForm = () => {
           number: '',
         }}
         onSubmit={(values, action) => {
-          action.resetForm();
           addContact(values);
+          action.resetForm();
         }}
       >
         <Form>
